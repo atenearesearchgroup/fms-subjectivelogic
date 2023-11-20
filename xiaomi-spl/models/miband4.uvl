@@ -1,0 +1,67 @@
+namespace SmartWatch
+
+features
+	SmartWatch {abstract true}
+		mandatory
+			Specifications {abstract true}
+				optional
+					Screen
+						mandatory
+							ScreenType {abstract true}
+								alternative
+									OLED
+									AMOLED
+										mandatory
+											CapacitivitySensing
+						optional
+							TouchScreen
+								optional
+									FullColor
+							CapacityButton
+				mandatory
+					FitnessMonitor
+					SleepTracker
+						mandatory
+							SleepCycleAlarm
+					VibrateAlert
+						mandatory
+							Call
+							Notification
+			Sensors {abstract true}
+				mandatory
+					Pedometer
+						optional
+							MovementFilter
+					Accelerometer
+				optional
+					Gyroscope
+					ProximitySensor
+					HeartRateSensor
+			Connectivity {abstract true}
+				or
+					Bluetooth40
+					BLE {abstract true}
+						alternative
+							BLEv40
+							BLEv42
+							BLEv50
+					NFC
+
+constraints
+	MovementFilter => !HeartRateSensor & BLEv40
+	BLE => HeartRateSensor | MovementFilter
+	Bluetooth40 => !Screen
+	!Screen => Bluetooth40
+	Bluetooth40 => !BLE & !NFC
+	NFC => TouchScreen
+	TouchScreen => BLEv42 | BLEv50
+	OLED => CapacityButton
+	CapacityButton => OLED
+	AMOLED => BLEv50
+	BLEv50 => AMOLED
+	AMOLED => Gyroscope
+	Gyroscope => AMOLED
+	AMOLED => ProximitySensor
+	ProximitySensor => AMOLED
+	BLEv50 => FullColor
+	FullColor => BLEv50

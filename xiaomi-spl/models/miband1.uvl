@@ -1,0 +1,23 @@
+namespace SmartWatch
+
+features
+	SmartWatch {abstract true}
+		mandatory
+			Specifications {abstract true}
+				mandatory
+					FitnessMonitor
+					SleepTracker
+						mandatory
+							SleepCycleAlarm
+					VibrateAlert
+						mandatory
+							Call
+							Notification
+			Sensors {abstract true}
+				mandatory
+					Pedometer
+					Accelerometer
+			Connectivity {abstract true}
+				mandatory
+					"Bluetooth4.0"
+
