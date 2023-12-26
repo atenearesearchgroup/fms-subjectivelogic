@@ -83,10 +83,12 @@ def main(fm_path: str, opinions_path: str, n_products: int):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Evolution Scenario 3: Variability Reduction.')
+    parser = argparse.ArgumentParser(description="Evolution Scenario 3 (Variability Reduction): Generate a given number of products from the feature model and rank them based on the provided stakeholder's opinions to help decide the final products to be realized.")
     parser.add_argument('-fm', '--featuremodel', dest='feature_model', type=str, required=True, help='Feature model (.uvl).')
     parser.add_argument('-o', '--opinions', dest='opinions', type=str, required=True, help="Stakeholders' opinions (.csv).")
     parser.add_argument('-n', '--n_products', dest='n_products', type=int, required=False, default=0, help='Number of products to rank (default all).')
+    parser.add_argument('-f', '--fusion_operator', dest='fusion_operator', type=str, required=False, default='CBF', help=f'Fusion operator: {[f for f in FUSE_OPERATORS.keys()]} (default CBF). ')
+    parser.add_argument('-s', '--strong_opinions', dest='strong_opinions', action='store_true', required=False, default=False, help="Consider strong degrees of uncertainty for stakelholder's opinions (default moderate).")
     args = parser.parse_args()
 
     main(args.feature_model, args.opinions, args.n_products)

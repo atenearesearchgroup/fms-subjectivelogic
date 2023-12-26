@@ -110,7 +110,7 @@ def get_product_opinions(product: Configuration, opinions: dict[str, dict[str, F
     return [get_product_opinion(product, opinions[stakeholder]) for stakeholder in opinions]
 
 def rank_products(products: list[Configuration], opinions: dict[str, dict[str, FMOpinion]], fuse_operator: Callable) -> dict[Configuration, tuple[sbool, float]]:
-    """Given a list of products, return the products ranked by their projection based on the opinions of the stakeholders."""
+    """Given a list of products, return the products ranked by the projection based on the opinions of the stakeholders."""
     rank = dict()
     for product in products:
         product_opinions = get_product_opinions(product, opinions)
