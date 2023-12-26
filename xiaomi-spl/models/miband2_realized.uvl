@@ -4,8 +4,6 @@ features
 	SmartWatch {abstract true}
 		optional
 			Screen
-				optional
-					TouchScreen
 				mandatory
 					OLED
 						mandatory
@@ -19,8 +17,6 @@ features
 						mandatory
 							Call
 							Notification
-				optional
-					ContactlessPayment
 			Sensors {abstract true}
 				mandatory
 					Pedometer
@@ -38,15 +34,4 @@ features
 									BLEv40
 									BLEv42
 							BT40
-				optional
-					NFC
 
-constraints
-	MovementFilter => !HeartRateSensor & BLEv40
-	BLE => HeartRateSensor | MovementFilter
-	BT40 => !Screen
-	!Screen => BT40
-	TouchScreen => BLEv42
-	NFC => TouchScreen
-	ContactlessPayment => NFC
-	NFC => ContactlessPayment

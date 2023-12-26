@@ -2,18 +2,17 @@ namespace SmartWatch
 
 features
 	SmartWatch {abstract true}
-		mandatory
-			Specifications {abstract true}
-				optional
-					Screen
+		optional
+			Screen
+				mandatory
+					OLED
 						mandatory
-							OLED
 							CapacityButton
+		mandatory
+			Services {abstract true}
 				mandatory
 					FitnessMonitor
 					SleepTracker
-						mandatory
-							SleepCycleAlarm
 					VibrateAlert
 						mandatory
 							Call
@@ -27,15 +26,17 @@ features
 				optional
 					HeartRateSensor
 			Connectivity {abstract true}
-				alternative
-					Bluetooth40
-					BLE {abstract true}
+				mandatory
+					Bluetooth
 						alternative
-							BLEv40
-							BLEv42
+							BLE {abstract true}
+								alternative
+									BLEv40
+									BLEv42
+							BT40
 
 constraints
 	MovementFilter => !HeartRateSensor & BLEv40
 	BLE => HeartRateSensor | MovementFilter
-	Bluetooth40 => !Screen
-	!Screen => Bluetooth40
+	BT40 => !Screen
+	!Screen => BT40

@@ -19,8 +19,6 @@ features
 						mandatory
 							Call
 							Notification
-				optional
-					ContactlessPayment
 			Sensors {abstract true}
 				mandatory
 					Pedometer
@@ -46,7 +44,5 @@ constraints
 	BLE => HeartRateSensor | MovementFilter
 	BT40 => !Screen
 	!Screen => BT40
-	TouchScreen => BLEv42
 	NFC => TouchScreen
-	ContactlessPayment => NFC
-	NFC => ContactlessPayment
+	TouchScreen => BLEv42

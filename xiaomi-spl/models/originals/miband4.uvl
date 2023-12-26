@@ -2,26 +2,27 @@ namespace SmartWatch
 
 features
 	SmartWatch {abstract true}
-		optional
-			Screen
-				mandatory
-					ScreenType {abstract true}
-						alternative
-							OLED
-								mandatory
-									CapacityButton
-							AMOLED
-								mandatory
-									CapacitivitySensing
-				optional
-					TouchScreen
-						optional
-							FullColor
 		mandatory
-			Services {abstract true}
+			Specifications {abstract true}
+				optional
+					Screen
+						mandatory
+							ScreenType {abstract true}
+								alternative
+									OLED
+									AMOLED
+										mandatory
+											CapacitivitySensing
+						optional
+							TouchScreen
+								optional
+									FullColor
+							CapacityButton
 				mandatory
 					FitnessMonitor
 					SleepTracker
+						mandatory
+							SleepCycleAlarm
 					VibrateAlert
 						mandatory
 							Call
@@ -34,30 +35,28 @@ features
 					Accelerometer
 				optional
 					Gyroscope
-					Infrared
-					Microphone
 					ProximitySensor
 					HeartRateSensor
 			Connectivity {abstract true}
-				optional
-					NFC
-				mandatory
-					Bluetooth
+				or
+					Bluetooth40
+					BLE {abstract true}
 						alternative
-							BLE {abstract true}
-								alternative
-									BLEv40
-									BLEv42
-									BLEv50
-							BT40
+							BLEv40
+							BLEv42
+							BLEv50
+					NFC
 
 constraints
 	MovementFilter => !HeartRateSensor & BLEv40
 	BLE => HeartRateSensor | MovementFilter
-	BT40 => !Screen
-	!Screen => BT40
+	Bluetooth40 => !Screen
+	!Screen => Bluetooth40
+	Bluetooth40 => !BLE & !NFC
 	NFC => TouchScreen
 	TouchScreen => BLEv42 | BLEv50
+	OLED => CapacityButton
+	CapacityButton => OLED
 	AMOLED => BLEv50
 	BLEv50 => AMOLED
 	AMOLED => Gyroscope
@@ -66,7 +65,3 @@ constraints
 	ProximitySensor => AMOLED
 	BLEv50 => FullColor
 	FullColor => BLEv50
-	Infrared => Microphone
-	Microphone => Infrared
-	Infrared | Microphone => NFC
-	Infrared | Microphone => BLEv50

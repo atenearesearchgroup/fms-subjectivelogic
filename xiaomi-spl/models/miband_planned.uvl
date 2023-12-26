@@ -4,12 +4,17 @@ features
 	SmartWatch {abstract true}
 		optional
 			Screen
+				mandatory
+					ScreenType {abstract true}
+						alternative
+							OLED
+								mandatory
+									CapacityButton
+							AMOLED
+								mandatory
+									CapacitivitySensing
 				optional
 					TouchScreen
-				mandatory
-					OLED
-						mandatory
-							CapacityButton
 		mandatory
 			Services {abstract true}
 				mandatory
@@ -28,8 +33,11 @@ features
 							MovementFilter
 					Accelerometer
 				optional
+					Gyroscope
 					HeartRateSensor
 			Connectivity {abstract true}
+				optional
+					NFC
 				mandatory
 					Bluetooth
 						alternative
@@ -38,15 +46,12 @@ features
 									BLEv40
 									BLEv42
 							BT40
-				optional
-					NFC
 
 constraints
 	MovementFilter => !HeartRateSensor & BLEv40
 	BLE => HeartRateSensor | MovementFilter
 	BT40 => !Screen
 	!Screen => BT40
-	TouchScreen => BLEv42
 	NFC => TouchScreen
+	TouchScreen => BLEv42
 	ContactlessPayment => NFC
-	NFC => ContactlessPayment

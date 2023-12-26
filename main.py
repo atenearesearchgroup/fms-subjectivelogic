@@ -1,3 +1,5 @@
+import argparse
+
 from flamapy.metamodels.fm_metamodel.transformations import UVLReader
 
 from flamapy.metamodels.bdd_metamodel.transformations import FmToBDD
@@ -9,6 +11,10 @@ from flamapy.metamodels.bdd_metamodel.operations import (
 #from flamapy.metamodels.pysat_metamodel.operations import Glucose3Products
 
 from uncertainty.utypes import *
+
+from fm_sublog.models import FUSE_OPERATORS
+from fm_sublog import utils
+from fm_sublog import fm_utils
 
 
 FM_PATH = 'models/miband5.uvl'
@@ -34,10 +40,23 @@ deciding_on_a_feature_with_constraints_NFC = [
 CP_AND_NFC = [x & y for x, y in zip(deciding_on_a_feature_with_constraints_CP, deciding_on_a_feature_with_constraints_NFC)]
 
 
-def main():
-    fm = UVLReader(FM_PATH).transform()
-    print(fm)
+def main(fm_path: str, opinions_path: str, n_products: int):
+    fm = UVLReader(fm_path).transform()
+    opinions = utils.read_opinions(opinions_path)
+    
+    # Generate products
+    products = fm_utils.generate_products(fm, n_products)
+    
+    # Get opinions from stakeholders:
+    #opinions = utils.get_product_opinion(products[0], opinions['Stakeholder1'])
+    rank = utils.rank_products(products, opinions, FUSE_OPERATORS['ABF'])
+    for i, (p, v) in enumerate(rank, 1):
+        print(f'{i}: {p} -> {v}')
+    
+    #opinions = [get_product_opinion(product, opinions[stakeholder]) for stakeholder in opinions)]
+    #print(opinion)   
 
+    raise Exception
     result = sbool.epistemicCumulativeFusion(deciding_on_an_independent_feature)
     print(f'Deciding on an independent feature (ECBF): {result} -> {result.projection()}')
     
@@ -64,4 +83,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Evolution Scenario 3: Variability Reduction.')
+    parser.add_argument('-fm', '--featuremodel', dest='feature_model', type=str, required=True, help='Feature model (.uvl).')
+    parser.add_argument('-o', '--opinions', dest='opinions', type=str, required=True, help="Stakeholders' opinions (.csv).")
+    parser.add_argument('-n', '--n_products', dest='n_products', type=int, required=False, default=0, help='Number of products to rank (default all).')
+    args = parser.parse_args()
+
+    main(args.feature_model, args.opinions, args.n_products)

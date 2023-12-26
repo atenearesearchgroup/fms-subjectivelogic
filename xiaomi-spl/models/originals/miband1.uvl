@@ -3,10 +3,12 @@ namespace SmartWatch
 features
 	SmartWatch {abstract true}
 		mandatory
-			Services {abstract true}
+			Specifications {abstract true}
 				mandatory
 					FitnessMonitor
 					SleepTracker
+						mandatory
+							SleepCycleAlarm
 					VibrateAlert
 						mandatory
 							Call
@@ -17,5 +19,5 @@ features
 					Accelerometer
 			Connectivity {abstract true}
 				mandatory
-					BT40
+					"Bluetooth4.0"
 
