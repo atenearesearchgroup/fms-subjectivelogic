@@ -1,5 +1,3 @@
-from flamapy.metamodels.fm_metamodel.models import Feature, Relation, Constraint
-
 from uncertainty.utypes import *
 
 
