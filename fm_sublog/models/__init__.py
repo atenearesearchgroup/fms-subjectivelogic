@@ -1,4 +1,5 @@
-from .fm_opinion import FMOpinion, UNCERTAINTY_DEGREES, FUSE_OPERATORS
+from .fm_opinion import FMOpinion, UNCERTAINTY_DEGREES, FUSION_OPERATORS
 
 __all__ = ['FMOpinion',
-           'UNCERTAINTY_DEGREES']
+           'UNCERTAINTY_DEGREES',
+           'FUSION_OPERATORS']

@@ -1,0 +1,48 @@
+namespace SmartWatch
+
+features
+	SmartWatch {abstract true}
+		optional
+			Screen
+				alternative
+					OLED
+						mandatory
+							CapacityButton
+					AMOLED
+						mandatory
+							CapacitySensing
+						optional
+							TouchScreen
+		mandatory
+			Services {abstract true}
+				mandatory
+					FitnessMonitor
+					SleepTracker
+					VibrateAlert
+						mandatory
+							Call
+							Notification
+				optional
+					ContactlessPayment
+			Sensors {abstract true}
+				mandatory
+					Pedometer
+						optional
+							MovementFilter
+					Accelerometer
+				optional
+					HeartRateSensor
+			Connectivity {abstract true}
+				mandatory
+					Bluetooth
+						alternative
+							BLE {abstract true}
+								alternative
+									BLEv40
+									BLEv42
+							BT40
+				optional
+					NFC
+
+constraints
+	ContactlessPayment => NFC
