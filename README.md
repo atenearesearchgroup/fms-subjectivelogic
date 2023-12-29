@@ -1,3 +1,11 @@
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Subjective logic applied to Feature Models](#subjective-logic-applied-to-feature-models)
+  - [Description](#description)
+  - [Requirements](#requirements)
+  - [Download and installation](#download-and-installation)
+  - [Execution of the scripts](#execution-of-the-scripts)
+  
 # Subjective logic applied to Feature Models
 
 ## Description
