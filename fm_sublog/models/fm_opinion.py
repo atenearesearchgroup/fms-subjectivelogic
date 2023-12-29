@@ -17,7 +17,7 @@ MODERATE_OPINIONS = {'CERTAIN': sbool(1.00, 0.00, 0.00, 0.50),
                      'UNLIKELY': sbool(0.05, 0.75, 0.20, 0.50),
                      'IMPOSSIBLE': sbool(0.00, 1.00, 0.00, 0.50)}
 
-UNCERTAINTY_DEGREES = [STRONG_OPINIONS.keys()]
+UNCERTAINTY_DEGREES = STRONG_OPINIONS.keys()
 
 FUSION_OPERATORS = {'CBF': sbool.cbFusion,
                     'CCF': sbool.ccFusion,

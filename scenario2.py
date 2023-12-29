@@ -22,6 +22,8 @@ def main(fm_path: str, opinions_path: str, strong_opinions: bool):
     count = 1
     for feature_name in features:
         feature =  fm.get_feature_by_name(feature_name)
+        if feature is None:
+            raise Exception(f'Feature {feature_name} does not exist in the feature model {fm_path}.')
         if feature not in analyzed_features:
             dependencies = fm_utils.get_feature_constraints_dependencies(fm, feature)
             if dependencies:  # feature with cross-tree constraints
@@ -32,6 +34,7 @@ def main(fm_path: str, opinions_path: str, strong_opinions: bool):
                 fused_opinion = FUSION_OPERATORS[fusion_operator](combined_opinions)
                 print(f'{count}: {' AND '.join([f.name for f in involved_features])}. Fused opinion ({fusion_operator}): {fused_opinion} -> {fused_opinion.projection()}')
                 analyzed_features.update(dependencies)
+                count += 1
     
     # Related group of features
     print('GROUP OF RELATED FEATURES:')
@@ -74,6 +77,7 @@ def main(fm_path: str, opinions_path: str, strong_opinions: bool):
             fusion_operator = utils.get_fusion_operator_for_feature(feature_name, opinions)
             feature_op = utils.get_fused_opinion_for_feature(feature_name, opinions)
             print(f'{count}: {feature_name}. Fused opinion ({fusion_operator}): {feature_op} -> {feature_op.projection()}')
+            count += 1
 
     # Rank features
     rank_features = dict()  # str -> (sbool, projection)
