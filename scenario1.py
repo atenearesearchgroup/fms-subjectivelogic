@@ -11,7 +11,8 @@ from fm_sublog import fm_utils
 
 
 def main(fm_path: str, opinions_path: str, strong_opinions: bool, threshold: float):
-    fm = UVLReader(fm_path).transform()  # NOTE: the feature model is not used in this script.
+    if fm_path is not None:
+        fm = UVLReader(fm_path).transform()  # NOTE: the feature model is not used in this script.
     opinions = utils.read_opinions(opinions_path, strong_opinions)
 
     features ={f for stakeholder in opinions.values() for f in stakeholder.keys()}
@@ -30,7 +31,7 @@ def main(fm_path: str, opinions_path: str, strong_opinions: bool, threshold: flo
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Evolution Scenario 1 (Feature Model Evolution): Decision making tool based on the provided stakeholder's opinions to decide the evolution of the feature model.")
-    parser.add_argument('-fm', '--featuremodel', dest='feature_model', type=str, required=True, help='Feature model (.uvl).')
+    parser.add_argument('-fm', '--featuremodel', dest='feature_model', type=str, required=False, default=None, help='Feature model (.uvl).')
     parser.add_argument('-o', '--opinions', dest='opinions', type=str, required=True, help="Stakeholders' opinions (.csv).")
     parser.add_argument('-s', '--strong_opinions', dest='strong_opinions', action='store_true', required=False, default=False, help="Consider strong degrees of uncertainty for stakelholder's opinions (default moderate).")
     parser.add_argument('-t', '--threshold', dest='threshold', required=False, type=float, default=0.5, help="Threshold to consider in the decisions.")
