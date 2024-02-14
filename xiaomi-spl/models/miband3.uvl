@@ -11,7 +11,7 @@ features
 						mandatory
 							CapacityButton
 		mandatory
-			Services {abstract true}
+			Functionalities {abstract true}
 				mandatory
 					FitnessMonitor
 					SleepTracker

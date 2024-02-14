@@ -68,7 +68,7 @@ def read_opinions(csv_filepath: str, strong_opinions: bool = False) -> dict[str,
 
 def get_product_opinion(product: Configuration, stakeholder_opinions: dict[str, FMOpinion]) -> sbool:
     """Return the SBoolean vector for the opinion of a stakeholder applying the AND operator."""
-    features_op = [stakeholder_opinions[f].opinion if product.elements[f] else ~stakeholder_opinions[f].opinion for f in stakeholder_opinions]
+    features_op = [stakeholder_opinions[f].opinion if product.elements.get(f, False) else ~stakeholder_opinions[f].opinion for f in stakeholder_opinions]
     return functools.reduce(lambda a, b: a & b, features_op)
 
 

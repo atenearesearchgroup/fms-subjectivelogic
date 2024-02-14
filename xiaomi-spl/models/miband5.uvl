@@ -18,10 +18,13 @@ features
 						optional
 							FullColor
 		mandatory
-			Services {abstract true}
+			Functionalities {abstract true}
 				mandatory
 					FitnessMonitor
 					SleepTracker
+				optional
+					ContactlessPayment
+				mandatory
 					VibrateAlert
 						mandatory
 							Call
@@ -38,6 +41,8 @@ features
 					Microphone
 					ProximitySensor
 					HeartRateSensor
+						optional
+							Photoplethysmogram
 			Connectivity {abstract true}
 				optional
 					NFC
@@ -66,7 +71,9 @@ constraints
 	ProximitySensor => AMOLED
 	BLEv50 => FullColor
 	FullColor => BLEv50
-	Infrared => Microphone
-	Microphone => Infrared
-	Infrared | Microphone => NFC
-	Infrared | Microphone => BLEv50
+	Infrared | Microphone => NFC & Photoplethysmogram
+	NFC => ContactlessPayment
+	ContactlessPayment => NFC
+	Photoplethysmogram => BLEv50
+	Microphone | Infrared => Photoplethysmogram
+	NFC & Photoplethysmogram => Microphone & Infrared

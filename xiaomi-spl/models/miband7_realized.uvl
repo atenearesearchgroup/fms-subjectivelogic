@@ -22,12 +22,13 @@ features
 				mandatory
 					FitnessMonitor
 					SleepTracker
+				optional
+					ContactlessPayment
+				mandatory
 					VibrateAlert
 						mandatory
 							Call
 							Notification
-				optional
-					ContactlessPayment
 			Sensors {abstract true}
 				mandatory
 					Pedometer
@@ -36,8 +37,13 @@ features
 					Accelerometer
 				optional
 					Gyroscope
+					Infrared
+					Microphone
 					ProximitySensor
 					HeartRateSensor
+						optional
+							Photoplethysmogram
+					SpO2
 			Connectivity {abstract true}
 				optional
 					NFC
@@ -49,6 +55,7 @@ features
 									BLEv40
 									BLEv42
 									BLEv50
+									BLEv52
 							BT40
 
 constraints
@@ -66,5 +73,9 @@ constraints
 	ProximitySensor => AMOLED
 	BLEv50 => FullColor
 	FullColor => BLEv50
-	ContactlessPayment => NFC
+	Infrared | Microphone => NFC & Photoplethysmogram
 	NFC => ContactlessPayment
+	ContactlessPayment => NFC
+	Photoplethysmogram => BLEv50
+	Microphone | Infrared => Photoplethysmogram
+	NFC & Photoplethysmogram => Microphone & Infrared

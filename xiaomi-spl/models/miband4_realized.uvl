@@ -57,14 +57,6 @@ constraints
 	BT40 => !Screen
 	!Screen => BT40
 	NFC => TouchScreen
-	TouchScreen => BLEv42 | BLEv50
-	AMOLED => BLEv50
-	BLEv50 => AMOLED
-	AMOLED => Gyroscope
-	Gyroscope => AMOLED
-	AMOLED => ProximitySensor
-	ProximitySensor => AMOLED
-	BLEv50 => FullColor
-	FullColor => BLEv50
+	TouchScreen => BLEv42
 	ContactlessPayment => NFC
 	NFC => ContactlessPayment

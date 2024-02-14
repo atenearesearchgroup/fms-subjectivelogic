@@ -3,7 +3,7 @@ namespace SmartWatch
 features
 	SmartWatch {abstract true}
 		mandatory
-			Services {abstract true}
+			Functionalities {abstract true}
 				mandatory
 					FitnessMonitor
 					SleepTracker
