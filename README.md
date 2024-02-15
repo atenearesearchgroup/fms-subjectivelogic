@@ -6,7 +6,7 @@
   - [Download and installation](#download-and-installation)
   - [Execution of the scripts](#execution-of-the-scripts)
   
-# Subjective logic applied to Feature Models
+# Belief Uncertainty for Feature Models
 
 ## Description
 This repository contains all the resources and artifacts associated with the paper "XX" submitted to the special issue "YYY" of the Journal of Systems & Software.
