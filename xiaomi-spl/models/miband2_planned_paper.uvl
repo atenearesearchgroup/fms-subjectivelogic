@@ -4,12 +4,17 @@ features
 	SmartWatch {abstract true}
 		optional
 			Screen
-				mandatory
+				alternative
 					OLED
 						mandatory
 							CapacityButton
+					AMOLED
+						mandatory
+							CapacitySensing
+						optional
+							TouchScreen
 		mandatory
-			Functionalities {abstract true}
+			Services {abstract true}
 				mandatory
 					FitnessMonitor
 					SleepTracker
@@ -17,6 +22,8 @@ features
 						mandatory
 							Call
 							Notification
+				optional
+					ContactlessPayment
 			Sensors {abstract true}
 				mandatory
 					Pedometer
@@ -34,4 +41,8 @@ features
 									BLEv40
 									BLEv42
 							BT40
+				optional
+					NFC
 
+constraints
+	ContactlessPayment => NFC

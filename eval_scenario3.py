@@ -1,6 +1,9 @@
 import argparse
 
+from flamapy.metamodels.configuration_metamodel.models import Configuration
 from flamapy.metamodels.fm_metamodel.transformations import UVLReader
+from flamapy.metamodels.bdd_metamodel.transformations import FmToBDD
+from flamapy.metamodels.bdd_metamodel.operations import BDDProductsNumber
 
 #from uncertainty.utypes import *
 
@@ -8,6 +11,7 @@ from fm_sublog.models import FUSION_OPERATORS
 from fm_sublog import utils
 from fm_sublog import fm_utils
 from fm_sublog.evaluation_utils import timer
+
 
 
 TIME_GENERATION = 'TIME_GENERATION'
@@ -18,16 +22,26 @@ def main(fm_path: str, opinions_path: str, n_products: int, fusion_operator: str
     fm = UVLReader(fm_path).transform()
     opinions = utils.read_opinions(opinions_path, strong_opinions)
     
+    bdd_model = FmToBDD(fm).transform()
+    n_products = BDDProductsNumber().execute(bdd_model).get_result()
+    print(f'#Products: {n_products}')
+
     # Generate products
     with timer.Timer(name=TIME_GENERATION, logger=None):
         products = fm_utils.generate_products(fm, n_products)
 
+    print(f'Products SAT: {len(products)}')
+    products_fixed = []
+    for p in products:
+        elements = {f: True for f in p}
+        products_fixed.append(Configuration(elements))
+    products = products_fixed
     with timer.Timer(name=TIME_RANKING, logger=None):
         rank = utils.rank_products(products, opinions, FUSION_OPERATORS[fusion_operator])
 
     print('PRODUCTS RANKING:')
-    for i, (p, v) in enumerate(rank, 1):
-        print(f'{i}. {[f for f in p.get_selected_elements()]}: {v[0]} -> {v[1]}')
+    # for i, (p, v) in enumerate(rank, 1):
+    #     print(f'{i}. {[f for f in p.get_selected_elements()]}: {v[0]} -> {v[1]}')
 
     time_generation = round(timer.Timer.timers[TIME_GENERATION], 4)
     time_ranking = round(timer.Timer.timers[TIME_RANKING], 4)

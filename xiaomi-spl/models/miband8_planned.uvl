@@ -5,14 +5,26 @@ features
 		optional
 			Screen
 				mandatory
-					OLED
-						mandatory
-							CapacityButton
+					ScreenType {abstract true}
+						alternative
+							OLED
+								mandatory
+									CapacityButton
+							AMOLED
+								mandatory
+									CapacitivitySensing
+				optional
+					TouchScreen
+						optional
+							FullColor
 		mandatory
 			Functionalities {abstract true}
 				mandatory
 					FitnessMonitor
 					SleepTracker
+				optional
+					ContactlessPayment
+				mandatory
 					VibrateAlert
 						mandatory
 							Call
@@ -24,8 +36,17 @@ features
 							MovementFilter
 					Accelerometer
 				optional
+					Gyroscope
+					Infrared
+					Microphone
+					ProximitySensor
 					HeartRateSensor
+						optional
+							Photoplethysmogram
+					SpO2
 			Connectivity {abstract true}
+				optional
+					NFC
 				mandatory
 					Bluetooth
 						alternative
@@ -33,5 +54,10 @@ features
 								alternative
 									BLEv40
 									BLEv42
+									BLEv50
+									BLEv52
+									BLEv51
 							BT40
 
+constraints
+	ContactlessPayment => NFC
